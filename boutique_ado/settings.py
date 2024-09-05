@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h1=6p-i+7280ej!v2cwok=*kn=-p$1i$c=2j@2r_s-u^bx)9#3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['8000-askeran17-boutiqueado-hp5iroyrrsi.ws.codeinstitute-ide.net','boutique-ado24-63d0c200b104.herokuapp.com', '.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['8000-askeran17-boutiqueado-9vupjiwib3l.ws.codeinstitute-ide.net','boutique-ado24-63d0c200b104.herokuapp.com', '.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Other
     'crispy_forms',
     'storages',
+    
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
@@ -173,15 +174,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 if 'USE_AWS' in os.environ:
+    # Cache control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000',
+    }
+
     # Bucket Config
-    AWS_STORAGE_BUCKET_NAME = 'ckz8780-boutique-ado'
-    AWS_S3_REGION_NAME = 'us-east-1'
+    AWS_STORAGE_BUCKET_NAME = 'lawforyou'
+    AWS_S3_REGION_NAME = 'eu-north-1'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
